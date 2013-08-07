@@ -25,7 +25,7 @@
     <property name="debuglevel" value="source,lines,vars"/>
 
     <!-- default version and SCM information -->
-    <property name="base.version" value="1.2.8"/>
+    <property name="base.version" value="1.2.8-cdh4.3.0"/>
     <property name="scm.connection" value="scm:git://git.apache.org/cassandra.git"/>
     <property name="scm.developerConnection" value="scm:git://git.apache.org/cassandra.git"/>
     <property name="scm.url" value="http://git-wip-us.apache.org/repos/asf?p=cassandra.git;a=tree"/>
@@ -78,14 +78,14 @@
               value="http://repo2.maven.org/maven2/org/apache/maven/maven-ant-tasks" />
     <!-- details of how and which Maven repository we publish to -->
     <property name="maven.version" value="3.0.3" />
-    <condition property="maven-repository-url" value="https://repository.apache.org/service/local/staging/deploy/maven2">
+    <condition property="maven-repository-url" value="https://fastconnect.org/maven/content/repositories/opensource">
       <isset property="release"/>
     </condition>
-    <condition property="maven-repository-id" value="apache.releases.https">
+    <condition property="maven-repository-id" value="repo.opensource.fastconnect.org">
       <isset property="release"/>
     </condition>
-    <property name="maven-repository-url" value="https://repository.apache.org/content/repositories/snapshots"/>
-    <property name="maven-repository-id" value="apache.snapshots.https"/>
+    <property name="maven-repository-url" value="https://fastconnect.org/maven/content/repositories/opensource-snapshot"/>
+    <property name="maven-repository-id" value="repo.opensource.snapshot.fastconnect.org"/>
 
     <property name="test.timeout" value="60000" />
     <property name="test.long.timeout" value="600000" />
@@ -309,7 +309,7 @@
             <arg value="-Dfile=@{file}" />
             <arg value="-Dclassifier=@{classifier}" />
             <arg value="-Dpackaging=@{packaging}" />
-            <arg value="-Papache-release" />
+            <arg value="-Pfastconnect" />
           </artifact:mvn>
         </sequential>
       </macrodef>
