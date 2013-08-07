@@ -26,6 +26,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.Reporter;
 import org.apache.hadoop.mapreduce.*;
+import org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl;
 
 /**
  * Hadoop InputFormat allowing map/reduce against Cassandra rows within one ColumnFamily.
@@ -54,14 +55,7 @@ public class ColumnFamilyInputFormat extends AbstractColumnFamilyInputFormat<Byt
 
     public org.apache.hadoop.mapred.RecordReader<ByteBuffer, SortedMap<ByteBuffer, IColumn>> getRecordReader(org.apache.hadoop.mapred.InputSplit split, JobConf jobConf, final Reporter reporter) throws IOException
     {
-        TaskAttemptContext tac = new TaskAttemptContext(jobConf, TaskAttemptID.forName(jobConf.get(MAPRED_TASK_ID)))
-        {
-            @Override
-            public void progress()
-            {
-                reporter.progress();
-            }
-        };
+        org.apache.hadoop.mapreduce.TaskAttemptContext tac = new TaskAttemptContextImpl(jobConf, TaskAttemptID.forName(jobConf.get(MAPRED_TASK_ID)));
 
         ColumnFamilyRecordReader recordReader = new ColumnFamilyRecordReader(jobConf.getInt(CASSANDRA_HADOOP_MAX_KEY_SIZE, CASSANDRA_HADOOP_MAX_KEY_SIZE_DEFAULT));
         recordReader.initialize((org.apache.hadoop.mapreduce.InputSplit)split, tac);
